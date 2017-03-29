@@ -1,0 +1,755 @@
+<navbar></navbar>
+<div class="container-fluid">
+	<div class="row">
+		<menuleft></menuleft>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			
+			<div class="row page-header">
+				<div class="col-sm-5">
+					<h1 class="no-margin">Detalles de la aplicación</h1>
+				</div>				
+			</div>
+			<div class="row page-header">
+				<div class="col-sm-12">
+					<h3 class="no-margin">
+						{{application.product_data.name}}
+						<span class="btn-sm v-middle">
+							<span class="glyphicon" ng-class="show_details ? 'glyphicon-chevron-down': 'glyphicon-chevron-right'" ng-click="show_details = !show_details" aria-hidden="true"></span>
+						</span>
+						<div class="col-xs-1  pull-right"  ng-click="openShareApplicationLink()">
+							<button class="btn btn-success">
+								<i class="fa fa-share-alt" aria-hidden="true"></i>
+							</button>
+						</div>
+						<div class="col-xs-1  pull-right">
+							<a class="btn btn-danger pull-right" target="_blank" href="{{application.url}}/es/dtes/candidate-registration/{{application.uuid}}/{{application.query_string_school}}">							
+								<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>											
+							</a>
+						</div>																		
+					</h3>
+				</div>
+			</div>
+			<div ng-show="show_details" class="animate-show ng-hide">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Inicio de registro</span>
+								<span class="form-control">{{application.initial_registration_timestamp | date:'dd-MMM-yyyy HH:mm:ss'}}</span>
+							</div>							
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Cierre de registro</span>
+								<span class="form-control">{{application.final_registration_timestamp | date:'dd-MMM-yyyy HH:mm:ss'}}</span>
+							</div>
+						</div>								
+					</div>
+					
+					<div class="col-sm-12"><br></div>
+					
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Fecha de aplicación</span>
+								<span class="form-control">{{ application.application_timestamp | date:'dd-MMM-yyyy HH:mm:ss' }}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Tipo</span>
+								<span class="form-control">{{application.type}}</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-12"><br></div>
+					
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Candidatos permitidos</span>
+								<span class="form-control">{{application.total_candidates}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Candidatos registrados</span>
+								<span class="form-control">{{application.registered_candidates}}</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-12"><br></div>
+				
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Candidatos por aula</span>
+								<span class="form-control">{{application.total_candidates_classroom}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Aulas necesarias</span>
+								<span class="form-control">{{application.total_candidates/application.total_candidates_classroom}}</span>
+							</div>
+						</div>								
+					</div>				
+				</div>						
+				
+				<div class="col-sm-12"><br></div>
+				
+				<div class="row page-header">
+					<div class="col-sm-12">
+						<h3 class="no-margin">Sede</h3>
+					</div>				
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Estado</span>
+								<span class="form-control">{{application.venue_data.state.name}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Ciudad</span>
+								<span class="form-control">{{application.venue_data.city.name}}</span>
+							</div>
+						</div>								
+					</div>
+							
+					<div class="col-sm-12"><br></div>
+						
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Institución</span>
+								<span class="form-control">{{application.venue_data.school}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Contacto</span>
+								<span class="form-control">{{application.venue_data.contact}}</span>
+							</div>
+						</div>
+					</div>													
+					
+					<div class="col-sm-12"><br></div>
+						
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Teléfono</span>
+								<span class="form-control">{{application.venue_data.phone}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Correo Electrónico</span>
+								<span class="form-control">{{application.venue_data.email}}</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-12"><br></div>
+					
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Domicilio</span>
+								<span class="form-control">{{application.venue_data.address}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row page-header">
+					<div class="col-sm-12">
+						<h3 class="no-margin">Producto</h3>
+					</div>				
+				</div>
+				<div class="row" ng-repeat="product_type in application.product_types">				
+					<div class="col-sm-12">
+						<h5 class="page-header">{{product_type.name}}</h5>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Precio</span>
+								<span class="form-control">{{product_type.price}}</span>
+							</div>
+						</div>
+						<!-- <div class="col-sm-6">
+							<div class="input-group">
+								<span class="input-group-addon" id="sizing-addon2">Comprados</span>
+								<span class="form-control">{{application.venue_data.email}}</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="col-sm-12"><br></div>
+				</div>
+				
+				<div class="row page-header">
+					<div class="col-sm-12">
+						<h3 class="no-margin">Operador</h3>
+					</div>				
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Nombre</span>
+								<span class="form-control">{{application.operator_data.name}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Correo electrónico</span>
+								<span class="form-control">{{application.operator_data.email}}</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-12"><br></div>
+					
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Teléfono</span>
+								<span class="form-control">{{application.operator_data.phone}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group has-warning">
+								<span class="input-group-addon" id="sizing-addon2">Domicilio</span>
+								<span class="form-control">{{application.operator_data.address}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			</div>
+			<div class="row page-header">
+				<div class="col-sm-12">
+					<h3 class="no-margin">
+						Candidatos
+						<span class="badge v-middle">{{application.registered_candidates}}</span>
+					</h3>
+				</div>
+			</div>
+			
+			<div class="row">
+				<uib-tabset active="active" class="animate-show">								
+					<uib-tab index="0" disable="tabs[0].disable" >
+						<uib-tab-heading>
+				        	PRE-REGISTRO 
+				        	<span class="badge v-middle">{{application.candidates_pre_registration.length}}</span>
+				      	</uib-tab-heading>
+				      	
+				      	<div class="col-sm-12"><br></div>
+				      	
+						<div class="col-xs-12">
+							<div class="row table-responsive" ng-show="application.candidates_pre_registration.length > 0">
+					            <table class="table table-hover">
+					              <thead>
+					                <tr>
+					                  <th>#</th>
+					                  <th>Nombre(s)</th>
+					                  <th>Apellido(s)</th>
+					                  <th>Email</th>
+					                  <th>Teléfono</th>
+					                  <th>Fecha de registro</th>
+					                  <th>Método de pago</th>
+					                  <th>CURP</th>
+					                  <th>Status</th>
+					                  <th class="text-center">
+					                  	Todos<br>
+					                  	<input type="checkbox" ng-change="selectAllCandidates(application.candidates_pre_registration, all_selected)" ng-model="all_selected">{{all_selected}}
+					                  </th>
+					                  <th>					                  	
+					                  </th>
+					                </tr>
+					              </thead>
+					              <tbody class="animate-show animate-hide">
+					                <tr ng-repeat="candidate in application.candidates_pre_registration">
+					                  <td>{{$index + 1}}</td>
+					                  <td>{{candidate.firstname}}</td>
+					                  <td>{{candidate.lastname}}</td>
+					                  <td>{{candidate.email}}</td>
+					                  <td>{{candidate.phone}}</td>	                  
+					                  <td>{{candidate.pivot.created_at | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+					                  <td>{{candidate.pivot.payment_method}}</td>
+					                  <td>{{candidate.curp}}</td>
+					                  <td>{{candidate.pivot.registration_status}}</td>
+					                  <td class="text-center">
+					                  	<label>
+										  <input type="checkbox" ng-change="onOffCandidate(candidate, $index, all_selected)" ng-model="candidate.index">{{candidate.index}}
+										</label>
+					                  </td>
+					                  <td>
+					                  	<button type="button" data-target="#edit" ng-click="getCandidate(candidate, $index)"  class="btn btn-primary" title="Detalles del candidato">
+					                  		<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+					                  	</button>
+					                  </td>
+					                </tr>
+					              </tbody>
+					            </table>
+				          	</div>
+				          	<div class="panel panel-default notification-box animate-show animate-hide" ng-show="selectedCandidates.length > 0">
+								<div>
+									Seleccione aceptar para confirmar registro de los elementos seleccionados ({{selectedCandidates.length}})
+									&nbsp;
+									&nbsp;
+									<button class="btn btn-danger" ng-click="sendConfirmationNotice(1)">Aceptar</button>
+								</div>
+							</div>
+						</div>
+					</uib-tab>
+					
+					<uib-tab index="1" disable="tabs[1].disable">
+						<uib-tab-heading>
+				        	REGISTRO CONFIRMADO
+				        	<span class="badge v-middle">{{application.candidates_authorized_payment.length}}</span>
+				      	</uib-tab-heading>
+				      	
+				      	<div class="col-sm-12"><br></div>
+				      	
+						<div class="col-xs-12">
+							<div class="row" ng-show="application.candidates_authorized_payment.length > 0">
+					      		<div class="col-sm-12">
+					      			<button class="btn btn-default" ng-click="generateLists()" target="_blank">Generar listas</button>
+					      		</div>	
+					      	</div>
+							<div class="col-xs-12">
+								<div class="row table-responsive" ng-show="application.candidates_authorized_payment.length > 0">									
+						            <table class="table table-hover">
+						              <thead>
+						                <tr>
+						                  <th>#</th>
+						                  <th>Nombre(s)</th>
+						                  <th>Apellido(s)</th>
+						                  <th>Email</th>
+						                  <th>Teléfono</th>
+						                  <th>Fecha de registro</th>
+						                  <th>Método de pago</th>
+						                  <th>CURP</th>
+						                  <th>Status</th>
+						                  <th class="text-center">
+						              	  	Asistencia/Falta<br>
+					                  		<input type="checkbox" ng-click="selectAllCandidates(application.candidates_pre_registration, all_selected)" ng-model="all_selected" ng-checked="all_selected">    	
+						                  </th>
+						                  <th></th>						                  
+						                </tr>
+						              </thead>
+						              <tbody>
+						                <tr ng-repeat="candidate in application.candidates_authorized_payment" class="animate-show animate-hide">
+						                  <td>{{$index + 1}}</td>
+						                  <td>{{candidate.firstname}}</td>
+						                  <td>{{candidate.lastname}}</td>
+						                  <td>{{candidate.email}}</td>
+						                  <td>{{candidate.phone}}</td>	                  
+						                  <td>{{candidate.pivot.created_at | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+						                  <td>{{candidate.pivot.payment_method}}</td>
+						                  <td>{{candidate.curp}}</td>
+						                  <td>{{candidate.pivot.registration_status}}</td>
+						                  <td class="text-center">
+						                  	<label>
+											  <input type="checkbox" ng-click="onOffCandidate(candidate, $index, all_selected)" ng-model="candidate.index" >
+											</label>
+						                  </td>
+						                  <td>
+						                  	<button type="button" data-target="#edit" ng-click="getCandidate(candidate, $index)" class="btn btn-primary" title="Detalles del candidato">
+						                  		<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						                  	</button>
+						                  </td>						                  
+						                </tr>
+						              </tbody>
+						            </table>
+					          	</div>											
+							</div>
+						</div>
+					</uib-tab>
+					<uib-tab index="2" disable="tabs[2].disable" heading="">
+						<uib-tab-heading>
+				        	ASISTENCIA
+				        	<span class="badge v-middle">{{application.candidates_attendance.length}}</span>
+				      	</uib-tab-heading>
+				      	
+				      	<div class="col-sm-12"><br></div>
+				      	
+						<div class="col-xs-12">
+							<div class="col-xs-12">
+								<div class="row table-responsive" ng-show="application.candidates_attendance.length > 0">
+						            <table class="table table-hover">
+						              <thead>
+						                <tr>
+						                  <th>#</th>
+						                  <th>Nombre(s)</th>
+						                  <th>Apellido(s)</th>
+						                  <th>Email</th>
+						                  <th>Teléfono</th>
+						                  <th>Fecha de registro</th>
+						                  <th>Método de pago</th>
+						                  <th>CURP</th>
+						                  <th>Status</th>
+						                  <th></th>
+						                </tr>
+						              </thead>
+						              <tbody>
+						                <tr ng-repeat="candidate in application.candidates_attendance" class="animate-show animate-hide">
+						                  <td>{{$index + 1}}</td>
+						                  <td>{{candidate.firstname}}</td>
+						                  <td>{{candidate.lastname}}</td>
+						                  <td>{{candidate.email}}</td>
+						                  <td>{{candidate.phone}}</td>
+						                  <td>{{candidate.pivot.created_at | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+						                  <td>{{candidate.pivot.payment_method}}</td>
+						                  <td>{{candidate.curp}}</td>
+						                  <td>{{candidate.pivot.registration_status}}</td>
+						                  <td>
+						                  	<button type="button" data-target="#edit" ng-click="getCandidate(candidate, $index)" class="btn btn-primary" title="Detalles del candidato">
+						                  		<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						                  	</button>
+						                  </td>
+						                </tr>
+						              </tbody>
+						            </table>
+					          	</div>											
+							</div>
+						</div>
+					</uib-tab>
+					<uib-tab index="3" disable="tabs[3].disable">
+						<uib-tab-heading>
+				        	FALTAS
+				        	<span class="badge v-middle">{{application.candidates_non_attendance.length}}</span>
+				      	</uib-tab-heading>
+				      	
+				      	<div class="col-sm-12"><br></div>
+				      	
+						<div class="col-xs-12">
+							<div class="col-xs-12">
+								<div class="row table-responsive" ng-show="application.candidates_non_attendance.length > 0">
+						            <table class="table table-hover">
+						              <thead>
+						                <tr>
+						                  <th>#</th>
+						                  <th>Nombre(s)</th>
+						                  <th>Apellido(s)</th>
+						                  <th>Email</th>
+						                  <th>Teléfono</th>
+						                  <th>Fecha de registro</th>
+						                  <th>Método de pago</th>
+						                  <th>CURP</th>
+						                  <th>Status</th>
+						                  <th></th>
+						                </tr>
+						              </thead>
+						              <tbody>
+						                <tr ng-repeat="candidate in application.candidates_non_attendance" class="animate-show animate-hide">
+						                  <td>{{$index + 1}}</td>
+						                  <td>{{candidate.firstname}}</td>
+						                  <td>{{candidate.lastname}}</td>
+						                  <td>{{candidate.email}}</td>
+						                  <td>{{candidate.phone}}</td>
+						                  <td>{{candidate.pivot.created_at | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+						                  <td>{{candidate.pivot.payment_method}}</td>
+						                  <td>{{candidate.curp}}</td>
+						                  <td>{{candidate.pivot.registration_status}}</td>
+						                  <td>
+						                  	<button type="button" data-target="#edit" ng-click="getCandidate(candidate, $index)" class="btn btn-primary" title="Detalles del candidato">
+						                  		<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						                  	</button>
+						                  </td>
+						                </tr>
+						              </tbody>
+						            </table>
+					          	</div>											
+							</div>
+						</div>					
+					</uib-tab>
+				</uib-tabset>
+			</div>
+			<!-- <div class="panel panel-default notification-box animate-show animate-hide" ng-show="selectedCandidates.length > 0">
+				<div>
+					Seleccione aceptar para confirmar registro para los elementos seleccionados ({{selectedCandidates.length}})
+					&nbsp;
+					&nbsp;
+					<button class="btn btn-danger" ng-click="sendConfirmationNotice()">Aceptar</button>
+				</div>
+			</div> -->
+		</div>
+	</div>	
+</div>
+
+<script type="text/ng-template" id="shareApplicationLink.html">
+	<div class="modal-header">
+		<button type="button" class="close animate-show" ng-click="resetForm()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="myModalLabel">Compartir enlace de esta aplicación</h4>
+	</div>
+	<form ng-show="!flag" class="center-block" style="float: none">		
+		<div class="modal-body">
+			<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000">{{alert.msg}}</div>			
+		</div>		
+		<div class="modal-footer">
+			<div ng-show="success">
+				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetForm()">Continuar</button>
+			</div>
+		</div>
+	</form>
+	<form id="share_application_link" ng-show="flag" class="ng-hide center-block col-xs-9" style="float: none" name="share_application_link" ng-submit="share_application_link.$valid && shareApplicationLink()">
+		<div class="modal-body">
+			<div class="form-group">
+				<div class="input-group has-warning">
+					<span class="input-group-addon" id="sizing-addon2">Examen</span>
+					<span class="form-control">{{ notification.exam }}</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="input-group has-warning">
+					<span class="input-group-addon" id="sizing-addon2">Inicio de registro</span>
+					<span class="form-control">{{ notification.initial_application_date | date:'dd-MMM-yyyy HH:mm:ss' }}</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="input-group has-warning">
+					<span class="input-group-addon" id="sizing-addon2">Cierre de registro</span>
+					<span class="form-control">{{ notification.final_application_date | date:'dd-MMM-yyyy HH:mm:ss' }}</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="input-group has-warning">
+					<span class="input-group-addon" id="sizing-addon2">Fecha de aplicación</span>
+					<span class="form-control">{{ notification.application_date | date:'dd-MMM-yyyy HH:mm:ss' }}</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="input-group has-warning">
+					<span class="input-group-addon" id="sizing-addon2">Institución</span>
+					<span class="form-control">{{ notification.school }}</span>
+				</div>
+			</div>						
+								  	     				      				
+			<div class="form-group" ng-class="notification.contact ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Contacto</span>
+					<input type="text" class="form-control" ng-model="notification.contact" ng-change="notification.contact = notification.contact.toUpperCase();" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.contact[0]">{{error.contact[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="notification.email ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Correo electrónico</span>
+					<input type="email" class="form-control" ng-model="notification.email" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.email[0]">{{error.email[0]}}</span>
+			</div>							  	     				      																						
+		</div>		
+		<div class="modal-footer" ng-show="share_application_link.$valid">
+			<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="resetForm()">Cancelar</button>
+			<button type="submit" class="btn btn-primary">Compartir</button>
+		</div>		
+	</form>	
+</script>
+
+<script type="text/ng-template" id="UpdateStatusCandidate.html">
+	<div class="modal-header">
+		<button type="button" class="close animate-show" ng-click="resetForm()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="myModalLabel">{{candidate_data.firstname}} {{candidate_data.lastname}}</h4>
+	</div>
+	<div class="col-sm-12"><br></div>
+	<div class="col-sm-12">
+		<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="3000">{{alert.msg}}</div>
+	</div>	
+	<form id="candidate-form" class="center-block col-xs-12" style="float: none" name="candidate_form" ng-submit="">
+		<div class="modal-body">     
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">CURP</span>
+							<span class="form-control">{{candidate_data.curp}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Fecha de nacimiento</span>
+							<span class="form-control">{{candidate_data.birthdate | date:'dd-MMM-yyyy'}}</span>
+						</div>
+					</div>											
+				</div>
+				
+				<div class="col-sm-12"><br></div>
+				
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Género</span>
+							<span class="form-control">{{candidate_data.genere}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Nacionalidad</span>
+							<span class="form-control">{{candidate_data.nationality}}</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12"><br></div>
+				
+				<div class="col-sm-12">											
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Correo electrónico</span>
+							<span class="form-control">{{candidate_data.email}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Teléfono</span>
+							<span class="form-control">{{candidate_data.phone}}</span>
+						</div>
+					</div>
+				</div>																		
+			</div>
+			
+			<div class="col-sm-12"><br></div>
+			
+			<div class="row page-header">
+				<div class="col-sm-12">
+					<h4>Domicilio</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Estado</span>
+							<span class="form-control">{{candidate_data.state}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Ciudad</span>
+							<span class="form-control">{{candidate_data.town}}</span>
+						</div>
+					</div>												
+				</div>
+				
+				<div class="col-sm-12"><br></div>
+				
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Colonia</span>
+							<span class="form-control">{{candidate_data.colony}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Calle</span>
+							<span class="form-control">{{candidate_data.street}}</span>
+						</div>
+					</div>
+				</div>
+					
+				<div class="col-sm-12"><br></div>
+					
+				<div class="col-sm-12">											
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Num. Exterior</span>
+							<span class="form-control">{{candidate_data.n_exterior}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning"  ng-show="candidate.n_interior">
+							<span class="input-group-addon" id="sizing-addon2">Num. Interior</span>
+							<span class="form-control">{{candidate_data.n_interior}}</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12"><br></div>
+										
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Código postal</span>
+							<span class="form-control">{{candidate_data.cp}}</span>
+						</div>
+					</div>
+				</div>														
+			</div>					
+			
+			<div class="row page-header">
+				<div class="col-sm-12">
+					<h4>Registro</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Fecha de registro</span>
+							<span class="form-control">{{candidate_data.pivot.created_at | date:'dd-MMM-yyyy HH:mm:ss'}}</span>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Método de pago</span>
+							<span class="form-control">{{candidate_data.pivot.payment_method}}</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12"><br></div>
+				
+				<div class="col-xs-12">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Status</span>
+							<span class="form-control">{{candidate_data.pivot.registration_status}}</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12"><br></div>
+				
+				<div class="col-xs-12" ng-show="candidate_data.pivot.proof_payment">
+					<div class="col-sm-12">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" id="sizing-addon2">Comprobante de pago</span>
+							<span class="form-control">{{candidate_data.pivot.proof_payment}}</span>
+							 <span class="input-group-btn">
+						     	<a class="btn btn-default" target="_blank" href="/apidtes/payment/{{candidate_data.pivot.proof_payment}}">Ver</a>
+						     </span>
+						</div>
+					</div>
+				</div>				
+				<div class="col-xs-12" ng-show="candidate_data.pivot.payment_method == 'PAYPAL' || candidate_data.pivot.payment_method == 'FOLIO ME'">
+					<div class="col-sm-6">
+						<div class="input-group has-warning">
+							<span class="input-group-addon" ng-if="candidate_data.pivot.payment_method == 'PAYPAL'" id="sizing-addon2">ID de transacción</span>
+							<span class="input-group-addon" ng-if="candidate_data.pivot.payment_method == 'FOLIO ME'" id="sizing-addon2">Folio ME</span>
+							<span class="form-control">{{candidate_data.pivot.folio_me}}</span>								 
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="resetForm()">Cerrar</button>
+		<button ng-if="candidate_data.pivot.registration_status == 'PRE-REGISTRO'" class="btn btn-danger" ng-click="updateCandidateStatus(1)">Confirmar registro</button>		
+		<button ng-if="candidate_data.pivot.registration_status == 'PAGO AUTORIZADO' && candidate_data.active == 1" class="btn btn-primary" ng-click="updateCandidateStatus(2)">Asistencia</button>
+		<button ng-if="candidate_data.pivot.registration_status == 'PAGO AUTORIZADO' && candidate_data.active == 1" class="btn btn-danger" ng-click="updateCandidateStatus(3)">Falta</button>
+	</div>
+	</form>	
+</script>

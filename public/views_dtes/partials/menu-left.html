@@ -1,0 +1,49 @@
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="AccordionCtrl">
+  <ul class="nav nav-sidebar">  
+  	<uib-accordion close-others="oneAtATime">       
+	    <div uib-accordion-group class="" is-open="a1">	    	 
+		      <uib-accordion-heading ng-click="a1 =! a1">
+			      <i class="fa fa-pencil-square" aria-hidden="true"></i>
+			      Aplicaciones
+			      <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': a1, 'glyphicon-chevron-right': !a1}"></i>
+		      </uib-accordion-heading>
+		      <li><a href="./active-applications">Activas</a></li>
+		      <li><a href="./application-history">Historial</a></li>
+		      <li><a href="./operators">Operadores</a></li>
+	    </div>
+	    <div uib-accordion-group class="" is-open="a4">	    	
+		      <uib-accordion-heading ng-click="a4 = !a4">
+		      	<i class="fa fa-users" aria-hidden="true"></i>
+	        	Candidatos 
+		        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': a4, 'glyphicon-chevron-right': !a4}"></i>
+		      </uib-accordion-heading>
+		      <li><a href="./candidates">Candidatos</a></li>
+	    </div>
+	    <div uib-accordion-group class="" is-open="a3">
+		      <uib-accordion-heading ng-click="a3 = !a3">
+		      	<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+		        Productos 
+		        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': a3, 'glyphicon-chevron-right': !a3}"></i>
+		      </uib-accordion-heading>
+		      <li><a href="./products">Productos</a></li>
+		      <li><a href="./versions-products">Versiones de productos</a></li>
+	    </div>
+	    <div uib-accordion-group class="" is-open="a2">
+		      <uib-accordion-heading ng-click="a2 = !a2">&nbsp;
+		      	<i class="fa fa-map-marker" aria-hidden="true"></i>
+		        Sedes 
+		        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': a2, 'glyphicon-chevron-right': !a2}"></i>
+		      </uib-accordion-heading>
+		      <li><a href="./structure-states">Estados</a></li>
+		      <li><a href="./venues">Lista de sedes</a></li>		      
+	   </div>
+	   <div uib-accordion-group class="" is-open="a5">	    	
+		      <uib-accordion-heading ng-click="a5 = !a5">
+		      	<i class="fa fa-user-circle" aria-hidden="true"></i>
+		        Usuarios <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': a5, 'glyphicon-chevron-right': !a5}"></i>
+		      </uib-accordion-heading>
+		      <li><a href="./users">Usuarios</a></li>
+	    </div>
+	  </uib-accordion>
+  </ul>
+</div>

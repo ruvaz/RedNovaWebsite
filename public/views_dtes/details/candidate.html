@@ -1,0 +1,45 @@
+<navbar></navbar>
+<div class="container-fluid" ng-init="getCandidate()">
+	<div class="row">
+		<menuleft></menuleft>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			
+			<div class="row page-header">
+				<div class="col-sm-4">
+					<h1 class="no-margin">
+						Información del candidato						
+					</h1>
+				</div>
+			</div>
+			
+			<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="3000">{{alert.msg}}</div>
+			
+			<div class="row page-header">
+				<div class="col-sm-4">
+					<h2 class="no-margin">
+						Aplicaciones
+					</h2>
+					<div ng-repeat="application in candidate.applications">
+						<div>
+							{{ application. }}
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row page-header">
+				<div class="col-sm-4">
+					<h2 class="no-margin">
+						Encuesta CENNI
+					</h2>
+					<div>
+						<div>
+							{{ candidate.cenni_survey }}
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>			
+	</div>
+</div>

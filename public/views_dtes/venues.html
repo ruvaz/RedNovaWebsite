@@ -1,0 +1,469 @@
+<navbar></navbar>
+<div class="container-fluid">
+	<div class="row">
+		<menuleft></menuleft>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			
+			<div class="row page-header">
+				<div class="col-sm-4">					
+					<h1 class="no-margin">						
+						Sedes
+					</h1>
+				</div>
+				<div class="col-sm-8">
+					<form class=" navbar-form navbar-left" role="search">					  
+					  <div class="input-group">
+						  <input type="text" 
+						  	 ng-model="search_venue" 
+						  	 ng-change="search_venue = search_venue.toUpperCase()"
+						  	 class="form-control" 
+						  	 placeholder="Buscar"   
+						  	 uib-tooltip="Se realiza la búsqueda por coincidencia en el Estado, Ciudad o Institución"
+				             tooltip-placement="bottom"
+				             tooltip-trigger="'mouseenter'"
+				             tooltip-enable="!inputModel"
+				             ng-required="true">
+				             
+						  <div class="input-group-btn">
+							    <button class="btn btn-default" ng-click="searchVenues(1,15)">
+							    	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>							    	
+							    </button>
+						  </div>
+					  </div>
+					</form>
+					<div class="form-group  navbar-form navbar-left">
+						<button type="submit" class="btn btn-default" ng-click="openNewVenueModal()" data-toggle="modal" data-target="#new-venue">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							Nueva sede
+						</button>
+					</div>
+					
+					<div class="form-group  navbar-form navbar-left">
+						<button type="submit" class="btn btn-default" ng-click="getVenues(currentPage, 15)" data-toggle="modal" data-target="#new-venue">
+							<!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> -->
+							Todas las sedes
+						</button>
+					</div>
+					
+				</div>				
+			</div>
+						
+			<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="3000">{{alert.msg}}</div>
+					
+			<div class="row table-responsive" ng-show="venues.length > 0">
+				<div class="col-xs-3">
+					<div class="form-group has-error">
+						<div class="input-group">
+							<span class="input-group-addon">Elementos por página</span>							
+							<select class="form-control" ng-model="itemsPerPage" ng-options="n disable when n > totalItems for n in [15,30,50,100,200]" ng-change="perPageChanged(itemsPerPage)">
+								<option ng-value="" ng-hide="true"></option>								
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="form-group has-error">
+						<div class="input-group">
+							<span class="input-group-addon">
+								Resultados encontrados
+							</span>
+							<span class="form-control">{{totalItems}}</span>
+						</div>						
+					</div>								
+				</div>				
+	            <table class="table table-hover">
+	              <thead>
+	                <tr class="active">
+	                  <th>#</th>
+	                  <th>
+	                  	Estado
+	                  	<input type="text" class="form-control" ng-model="search.state.name"/>
+	                  </th>
+	                  <th>
+	                  	Ciudad
+	                  	<input type="text" class="form-control" ng-model="search.city.name"/>
+	                  </th>
+	                  <th>
+	                  	Institución
+	                  	<input type="text" class="form-control" ng-model="search.school"/>
+	                  </th>
+	                  <th>
+	                  	Contacto
+	                  	<input type="text" class="form-control" ng-model="search.contact"/>
+	                  </th>
+	                  <th>
+	                  	Email
+	                  	<input type="text" class="form-control" ng-model="search.email"/>
+	                  </th>
+	                  <th>
+	                  	Teléfono
+	                  	<input type="text" class="form-control" ng-model="search.phone"/>
+	                  </th>
+	                  <th>
+	                  	Domicilio
+	                  	<input type="text" class="form-control" ng-model="search.address"/>
+	                  </th>
+	                  <!-- <th>Status</th> -->
+	                  <th></th>
+	                  <!-- <th></th> -->
+	                </tr>
+	              </thead>
+	              <tbody>
+	                <tr ng-repeat="venue in venues | filter:search:strict" ng-class="venue.authorized_center == 1 ? 'success': ''">
+	                	<td>{{$index + index}}</td>
+	                	<td>{{venue.state.name}}</td>
+	                	<td>{{venue.city.name}}</td>
+	                	<td>{{venue.school}}</td>
+	                	<td>{{venue.contact}}</td>
+	                	<td>{{venue.email}}</td>
+	                	<td>{{venue.phone}}</td>
+	                	<td>{{venue.address}}</td>
+	                	<!-- <td>{{venue.status}}</td> -->
+	                	<td>
+	                		<button type="button" class="btn btn-default" data-target="#edit" data-toggle="modal" ng-click="getVenue(venue, $index)">
+	                			<span class="glyphicon glyphicon-pencil" aria-hidden="true"> </span>  
+	                			&nbsp;Editar
+	                		</button>
+	                	</td>
+	                	<!-- <td>
+	                		<button type="button" class="btn btn-primary" data-target="#details" data-toggle="modal">
+	                			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+	                			 &nbsp;Detalles
+	                		</button>
+	                	</td> -->
+	                </tr>
+	              </tbody>
+	            </table>
+	            <ul uib-pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="maxSize" ng-model="currentPage" ng-change="pageChanged()"  class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul> 
+	          </div>
+		</div>
+	</div>
+</div>
+
+<!-- modal window to create a new venue -->
+<script type="text/ng-template" id="NewVenueContent.html">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="resetForm()"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="myModalLabel">Datos de la sede</h4>
+	</div>
+	<div class="modal-body">
+		<div class="modal-body animate-show" ng-show="success != null">
+			<div class="form-group">
+				<div class="alert alert-info alert-dismissible" role="alert">
+				<strong>{{success}}</strong>
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetForm()">Continuar</button>
+			</div>
+		</div>
+	</div>		
+	
+	<form name="venue_form" class="center-block col-xs-9 animate-show animate-hide" ng-show="flag" style="float: none" ng-submit="venue_form.$valid && sendVenueForm()">
+		<div class="modal-body">
+			<div class="form-group">
+				<div class="input-group" ng-class="venue.state_id ? 'has-success' : 'has-error'">
+					<span class="input-group-addon">Estado</span>
+					<select class="form-control" ng-model="venue.state_id" ng-change="getCities()" ng-options="state.id as state.name for state in states track by state.id" required>
+						<option value="" ng-show="false"></option>
+					</select>						
+				</div>		
+				<div class="btn-right-plus btn btn-default" type="button" ng-click="newState =! newState">						
+					<span ng-class="!newState ? 'glyphicon-plus' : 'glyphicon-minus'" class="glyphicon " aria-hidden="true"></span>						
+				</div>	
+			</div>
+			
+			<div class="form-group animate-show animate-hide" ng-show="newState" ng-init="states()">
+				<div class="input-group">
+					<select class="form-control" ng-model="new_state" ng-options="new_state as new_state.name for new_state in listStates">
+						<option value="">Selecciona un estado</option>
+					</select>	
+					<span class="input-group-btn">
+						<button class="btn btn-success" type="button" ng-click="sendNewState()">
+							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+						</button>
+					</span>				    
+				</div><!-- /input-group -->
+				<span class="text-danger" role="alert" ng-show="error_state.name[0]">{{error_state.name[0]}}</span>							
+			</div>
+			
+			<div class="form-group animate-show"  ng-hide="venue.state_id == null" ng-class="venue.city_id ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon" >Ciudad</span>
+					<select class="form-control" ng-model="venue.city_id" ng-options="city.id as city.name for city in cities track by city.id" required>
+						<option value="" ng-show="false"></option>
+					</select>
+				</div>
+				<div class="btn-right-plus btn btn-default" ng-click="newCity = !newCity">
+					<span ng-class="!newCity ? 'glyphicon-plus' : 'glyphicon-minus'" class="glyphicon " aria-hidden="true"></span>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.city_id[0]" ng-hide="venue.city_id">{{error.city_id[0]}}</span>
+			</div>
+			
+			<div class="form-group animate-show animate-hide" ng-show="newCity">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="new_city" ng-change="new_city = new_city.toUpperCase();" placeholder="Nombre de la ciudad">
+					<span class="input-group-btn">
+						<button class="btn btn-success" type="button" ng-click="sendNewCity()">
+							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div><!-- /input-group -->
+				<span class="text-danger" role="alert" ng-show="error_city.name[0]">{{error_city.name[0]}}</span>							
+			</div>
+						
+			<div class="form-group" ng-class="venue.school ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Colegio</span>
+					<input type="text" class="form-control" ng-model="venue.school" ng-change="venue.school = venue.school.toUpperCase();" placeholder="Colegio" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.school[0]" ng-hide="venue.school && !error.school[0]">{{error.school[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="venue.contact ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Contacto</span>
+					<input type="text" class="form-control" ng-model="venue.contact" ng-change="venue.contact = venue.contact.toUpperCase();" placeholder="Contacto" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.contact[0]" ng-hide="venue.contact && !error.contact[0]">{{error.contact[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="venue.email ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Correo electrónico</span>
+					<input type="email" class="form-control" ng-model="venue.email" placeholder="Correo electrónico" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.email[0]" ng-hide="venue.email && !error.email[0]">{{error.email[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="venue.phone ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Teléfono</span>
+					<input type="text" class="form-control" ng-model="venue.phone" placeholder="Teléfono" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.phone[0]" ng-hide="venue.phone && !error.phone[0]">{{error.phone[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="venue.address ? 'has-success' : 'has-error'">
+				<div class="input-group">
+					<span class="input-group-addon">Domicilio</span>
+					<input type="text" class="form-control" ng-model="venue.address" ng-change="venue.address = venue.address.toUpperCase();" placeholder="Domicilio" aria-describedby="sizing-addon2" required>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.address[0]" ng-hide="venue.address && !error.address[0]">{{error.address[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="venue.location ? 'has-success' : ''">
+				<div class="input-group">
+					<span class="input-group-addon">Ubicación</span>
+					<input type="text" class="form-control" ng-model="venue.location" placeholder="Ubicación" aria-describedby="sizing-addon2">
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.location[0]" ng-hide="venue.location && !error.location[0]">{{error.location[0]}}</span>
+			</div>
+			
+			<div class="form-group" ng-class="venue.discount && venue.percentage ? 'has-success' : ''">
+				<div class="input-group">
+					<span class="input-group-addon">Descuento</span>
+					<span class="input-group-addon">
+				        <input type="checkbox" ng-model="venue.discount" aria-label="Descuento">
+				      </span>
+					<select class="form-control" ng-model="venue.percentage" ng-show="venue.discount" ng-required="venue.discount">
+						<option value="">Seleccione una opción</option>
+						<option value="5">5%</option>
+						<option value="10">10%</option>
+						<option value="15">15%</option>
+						<option value="20">20%</option>
+					</select>
+				</div>
+				<span class="text-danger" role="alert" ng-show="error.percentage[0]" ng-hide="venue.percentage">{{error.percentage[0]}}</span>
+			</div>
+			<div ng-show="venue.percentage && venue.discount" class="animate-show animate-hide">
+				<div class="well well-sm">Vigencia del convenio</div>
+				<div class="form-group" ng-class="initial_agreement_date_obj ? 'has-success' : 'has-error'">													
+				    <div class="input-group">
+				    	<span class="input-group-addon">Fecha inicial</span>						      			    	
+				      	<input type="text" class="form-control" ng-model="initial_agreement_date_obj" uib-datepicker-popup="{{format}}" alt-input-formats="altInputFormats" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Cerrar" ng-required="venue.percentage && venue.discount"/>
+				      	<span class="input-group-btn">
+					        <button type="button" ng-class="initial_agreement_date_obj ? 'btn-success' : 'btn-danger'" class="btn" ng-click="popup1.opened = !popup1.opened">
+					        	<i class="glyphicon glyphicon-calendar"></i>
+					        </button>
+				      	</span><!-- /btn-group -->
+				    </div><!-- /input-group -->
+					<span class="text-danger" role="alert" ng-show="error.initial_agreement_date[0]" ng-hide="initial_agreement_date_obj">{{error.initial_agreement_date[0]}}</span>
+				</div>						
+				<div class="form-group" ng-class="final_agreement_date_obj ? 'has-success' : 'has-error'">													
+				    <div class="input-group">
+				    	<span class="input-group-addon">Fecha final</span>			    	
+				      	<input type="text" class="form-control" ng-model="final_agreement_date_obj" uib-datepicker-popup="{{format}}" alt-input-formats="altInputFormats" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Cerrar" ng-required="venue.percentage && venue.discount"/>
+				      	<span class="input-group-btn">
+					        <button type="button" ng-class="final_agreement_date_obj ? 'btn-success' : 'btn-danger'" class="btn" ng-click="popup2.opened = !popup2.opened">
+					        	<i class="glyphicon glyphicon-calendar"></i>
+					        </button>
+				      	</span><!-- /btn-group -->						      
+				    </div><!-- /input-group -->					   					  
+					<span class="text-danger" role="alert" ng-show="error.final_agreement_date[0]" ng-hide="final_agreement_date_obj">{{error.final_agreement_date[0]}}</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="venue.authorized_center ? 'has-success' : ''">
+				<div class="input-group">
+					<span class="input-group-addon">Centro autorizado</span>	
+					<span class="input-group-addon">
+			        	<input type="checkbox" ng-model="venue.authorized_center" aria-label="Centro autorizado">	
+			        </span>			
+			        <input type="hidden">
+			    </div>
+			</div>
+		</div>
+		<div class="modal-footer" ng-show="venue_form.$valid">
+			<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="resetForm()">Cancelar</button>
+			<button type="submit" class="btn btn-primary">Enviar</button>
+		</div>
+	</form>	
+</script>
+
+<!-- modal window to update venue -->
+<script type="text/ng-template" id="UpdateVenueContent.html">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="resetForm()"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="myModalLabel">Actualizar sede</h4>
+	</div>
+      	
+	<div class="modal-body animate-show" ng-show="success != null">
+		<div class="form-group">
+			<div class="alert alert-info alert-dismissible" role="alert">
+				<strong>{{success}}</strong>
+		  	</div>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetForm()">Continuar</button>
+		</div>
+	</div>
+      	
+	<form name="update_venue_form" ng-submit="update_venue_form.$valid && updateVenue()" ng-show="flag">
+		<div class="modal-body">
+			<div  class="center-block col-xs-9" style="float: none">
+			  	<div class="form-group">
+					<div class="input-group" ng-class="venue.state_id ? 'has-success' : 'has-error'">
+						<span class="input-group-addon">Estado</span>
+						<select class="form-control" ng-model="venue.state_id" ng-change="getCities()" ng-options="state.id as state.name for state in states track by state.id" required>
+							<option ng-value="state.id" value="" ng-hide="venue.state_id != state.id" ng-selected="{{venue.state_id == state.id}}">{{venue.state.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group animate-show"  ng-hide="venue.state_id == null" ng-class="venue.city_id ? 'has-success' : 'has-error'">
+					<div class="input-group">
+						<span class="input-group-addon" >Ciudad</span>
+						<select class="form-control" ng-model="venue.city_id" ng-options="city.id as city.name for city in cities track by city.id" required>
+						  <option  ng-value="city.id" value="" ng-hide="true" ng-selected="{{venue.city_id == city.id}}">{{venue.city.name}}</option>
+						</select>
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.city_id[0]" ng-hide="venue.city_id">{{error.city_id[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="venue.school ? 'has-success' : 'has-error'">
+					<div class="input-group">
+					  <span class="input-group-addon">Colegio</span>
+					  <input type="text" class="form-control" ng-model="venue.school" ng-change="venue.school = venue.school.toUpperCase();error.school[0] = ''" placeholder="Colegio" aria-describedby="sizing-addon2" required>
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.school[0]">{{error.school[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="venue.contact ? 'has-success' : 'has-error'">
+					<div class="input-group">
+					  <span class="input-group-addon">Contacto</span>
+					  <input type="text" class="form-control" ng-model="venue.contact" ng-change="venue.contact = venue.contact.toUpperCase();error.contact[0] = ''" placeholder="Contacto" aria-describedby="sizing-addon2" required>
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.contact[0]">{{error.contact[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="update_venue_form.email.$valid ? 'has-success' : 'has-error'">
+					<div class="input-group">
+					  <span class="input-group-addon">Correo electrónico</span>
+					  <input type="email" class="form-control" name="email" ng-model="venue.email" ng-change="venue.contact = venue.contact.toUpperCase();error.email[0] = ''" placeholder="Correo electrónico" aria-describedby="sizing-addon2" required>
+					</div>					
+					<span class="text-danger" role="alert" ng-show="error.email[0]">{{error.email[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="venue.phone ? 'has-success' : 'has-error'">
+					<div class="input-group">
+					  <span class="input-group-addon">Teléfono</span>
+					  <input type="text" class="form-control" ng-model="venue.phone" ng-change="error.phone[0] = ''" placeholder="Teléfono" aria-describedby="sizing-addon2" required>
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.phone[0]">{{error.phone[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="venue.address ? 'has-success' : 'has-error'">
+					<div class="input-group">
+					  <span class="input-group-addon">Domicilio</span>
+					  <input type="text" class="form-control" ng-model="venue.address" ng-change="venue.address = venue.address.toUpperCase(); error.address[0]=''" placeholder="Domicilio" aria-describedby="sizing-addon2" required>
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.address[0]">{{error.address[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="venue.location ? 'has-success' : ''">
+					<div class="input-group">
+						<span class="input-group-addon">Ubicación</span>
+						<input type="text" class="form-control" ng-model="venue.location" placeholder="Ubicación" aria-describedby="sizing-addon2">
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.location[0]" ng-hide="venue.location && !error.location[0]">{{error.location[0]}}</span>
+				</div>
+				
+				<div class="form-group" ng-class="venue.discount && venue.percentage ? 'has-success' : ''">
+					<div class="input-group">
+						<span class="input-group-addon">Descuento</span>
+						<span class="input-group-addon">
+					        <input type="checkbox" ng-model="venue.discount" aria-label="Descuento">
+					      </span>
+						<select class="form-control" ng-model="venue.percentage" ng-show="venue.discount" ng-required="venue.discount">
+							<option value="">Seleccione una opción</option>
+							<option value="5">5%</option>
+							<option value="10">10%</option>
+							<option value="15">15%</option>
+							<option value="20">20%</option>
+						</select>
+					</div>
+					<span class="text-danger" role="alert" ng-show="error.percentage[0]" ng-hide="venue.percentage">{{error.percentage[0]}}</span>
+				</div>
+				<div ng-show="venue.percentage && venue.discount" class="animate-show animate-hide">
+					<div class="well well-sm">Vigencia del convenio</div>
+					<div class="form-group" ng-class="initial_agreement_date_obj ? 'has-success' : 'has-error'">													
+					    <div class="input-group">
+					    	<span class="input-group-addon">Fecha inicial</span>						      			    	
+					      	<input type="text" class="form-control" ng-model="initial_agreement_date_obj" uib-datepicker-popup="{{format}}" alt-input-formats="altInputFormats" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Cerrar" ng-required="venue.percentage && venue.discount"/>
+					      	<span class="input-group-btn">
+						        <button type="button" ng-class="initial_agreement_date_obj ? 'btn-success' : 'btn-danger'" class="btn" ng-click="popup1.opened = !popup1.opened">
+						        	<i class="glyphicon glyphicon-calendar"></i>
+						        </button>
+					      	</span><!-- /btn-group -->
+					    </div><!-- /input-group -->
+						<span class="text-danger" role="alert" ng-show="error.initial_agreement_date[0]" ng-hide="initial_agreement_date_obj">{{error.initial_agreement_date[0]}}</span>
+					</div>						
+					<div class="form-group" ng-class="final_agreement_date_obj ? 'has-success' : 'has-error'">													
+					    <div class="input-group">
+					    	<span class="input-group-addon">Fecha final</span>			    	
+					      	<input type="text" class="form-control" ng-model="final_agreement_date_obj" uib-datepicker-popup="{{format}}" alt-input-formats="altInputFormats" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Cerrar" ng-required="venue.percentage && venue.discount"/>
+					      	<span class="input-group-btn">
+						        <button type="button" ng-class="final_agreement_date_obj ? 'btn-success' : 'btn-danger'" class="btn" ng-click="popup2.opened = !popup2.opened">
+						        	<i class="glyphicon glyphicon-calendar"></i>
+						        </button>
+					      	</span><!-- /btn-group -->						      
+					    </div><!-- /input-group -->					   					  
+						<span class="text-danger" role="alert" ng-show="error.final_agreement_date[0]" ng-hide="final_agreement_date_obj">{{error.final_agreement_date[0]}}</span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="venue.authorized_center ? 'has-success' : ''">
+					<div class="input-group">
+						<span class="input-group-addon">Centro autorizado</span>	
+						<span class="input-group-addon">
+				        	<input type="checkbox" ng-model="venue.authorized_center" aria-label="Centro autorizado">	
+				        </span>			
+				        <input type="hidden">
+				    </div>
+				</div>	      
+		    </div>	        
+    	</div>
+    	<div class="modal-footer" ng-show="update_venue_form.$valid">
+	        <button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="resetForm()">Cancelar</button>
+	        <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>	        	     
+	</form>
+</script>

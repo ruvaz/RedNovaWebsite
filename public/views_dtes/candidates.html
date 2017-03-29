@@ -1,0 +1,134 @@
+<navbar></navbar>
+<div class="container-fluid">
+	<div class="row">
+		<menuleft></menuleft>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">			
+			<div class="row page-header">
+				<div class="col-sm-4">
+					<h1 class="no-margin">
+						Candidatos
+					</h1>
+				</div>
+				<div class="col-sm-8">
+					<form class=" navbar-form navbar-left" role="search">					  
+					  <div class="input-group">
+						  <input type="text" 
+						  	 ng-model="search_candidate" 
+						  	 ng-change="search_candidate = search_candidate.toUpperCase()"
+						  	 class="form-control" 
+						  	 placeholder="Buscar"   
+						  	 uib-tooltip="Se realiza la búsqueda por coincidencia en nombre(s),apellidos y correo electrónico"
+				             tooltip-placement="bottom"
+				             tooltip-trigger="'mouseenter'"
+				             tooltip-enable="!inputModel"
+				             ng-required="true">
+				             
+						  <div class="input-group-btn">
+							    <button type="submit" class="btn btn-default" ng-click="searchCandidates(1,50)">
+							    	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>							    	
+							    </button>							    
+						  </div>						  
+					  </div>
+					</form>
+					<div class="form-group  navbar-form navbar-left">
+						<button type="submit" class="btn btn-default" ng-click="openNewVenueModal()" data-toggle="modal" data-target="#new-venue">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							Nuevo Candidato
+						</button>
+					</div>
+					
+					<div class="form-group  navbar-form navbar-left">
+						<button type="submit" class="btn btn-default" ng-click="getCandidates(currentPage, 50)" data-toggle="modal" data-target="#new-venue">
+							<!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> -->
+							Todos los candidatos
+						</button>
+					</div>
+					
+				</div>				
+			</div>
+			
+			<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="3000">{{alert.msg}}</div>
+			
+			<div class="row table-responsive" ng-show="candidates.length > 0">
+				<div class="col-xs-3">
+					<div class="form-group has-error">
+						<div class="input-group">
+							<span class="input-group-addon">Elementos por página</span>							
+							<select class="form-control" ng-model="itemsPerPage" ng-options="n disable when n > totalItems for n in [50,100,200,400,500]" ng-change="perPageChanged(itemsPerPage)">
+								<option ng-value="" ng-hide="true"></option>								
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="form-group has-error">
+						<div class="input-group">
+							<span class="input-group-addon">
+								Resultados encontrados
+							</span>
+							<span class="form-control">{{totalItems}}</span>
+						</div>
+					</div>
+				</div>
+	            <table class="table table-hover">
+	              <thead>
+	                <tr class="active">
+	                  <th>#</th>
+	                  <th>
+	                  	Nombre(s)
+	                  	<input type="text" class="form-control" ng-model="search.firstname"/>
+	                  </th>
+	                  <th>
+	                  	Apellidos
+	                  	<input type="text" class="form-control" ng-model="search.lastname"/>
+	                  </th>
+	                  <th>
+	                  	CURP
+	                  	<input type="text" class="form-control" ng-model="search.curp"/>
+	                  </th>
+	                  <th>
+	                  	Correo electrónico
+	                  	<input type="text" class="form-control" ng-model="search.email"/>
+	                  </th>
+	                  <th>
+	                  	Teléfono
+	                  	<input type="text" class="form-control" ng-model="search.phone"/>
+	                  </th>
+	                  <th>
+	                  	Género
+	                  	<input type="text" class="form-control" ng-model="search.genere"/>
+	                  </th>
+	                  <!-- <th></th> -->
+	                  <th></th>
+	                </tr>
+	              </thead>
+	              <tbody>
+	                <tr ng-repeat="candidate in candidates | filter:search:strict">
+	                	<td>{{$index + index}}</td>
+	                	<td>{{candidate.firstname}}</td>
+	                	<td>{{candidate.lastname}}</td>
+	                	<td>{{candidate.curp}}</td>
+	                	<td>{{candidate.email}}</td>
+	                	<td>{{candidate.phone}}</td>
+	                	<td>{{candidate.genere}}</td>
+	                	<!-- <td>
+	                		<button type="button" class="btn btn-default" data-target="#edit" data-toggle="modal" ng-click="getCandidate(candidate, $index)">
+	                			<span class="glyphicon glyphicon-pencil" aria-hidden="true"> </span>  
+	                			&nbsp;Editar
+	                		</button>
+	                	</td> -->
+	                	<td>
+	                		<a class="btn btn-primary" href="./candidate-details/{{candidate.id}}">
+	                			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+	                			 &nbsp;Detalles
+	                		</a>
+	                	</td>
+	                </tr>
+	              </tbody>
+	            </table>
+	            <ul uib-pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="maxSize" ng-model="currentPage" ng-change="pageChanged()"  class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul> 
+	          </div>
+			
+		</div>
+	</div>
+</div>

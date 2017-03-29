@@ -1,0 +1,46 @@
+﻿.captha-form{ margin-top:15px;}
+.captha-form input[type='text']{border:1px solid #b1b1b1; padding:4px; min-width:200px; font-family: verdana; font-size:14px;}
+.captha-form #btnrefresh{background:url(../images/icon-refresh.gif) 0 0 no-repeat; width:18px; height:20px; border:0; cursor: pointer; font-size: 0; margin-top: 2px; vertical-align: top; }
+/*.captha-form input.validate_req{ margin: 0px; border:1px solid #da1b2c;} */
+#validatemsg{ color:#da1b2c; font-size:14px; padding-top:15px; font-weight:600;}
+.captha-form input[type='text'].validate_req{ margin: 0px; border:2px solid #da1b2c !important;}
+#txtCaptcha{text-align:left !important; color:#119621; margin-top:10px; border:0; background:none !important}
+.validate_req .selectedValue { border:2px solid #da1b2c !important;}
+.customSelect.validate_req {   border: 0 ;}
+.culture-gallery .trans-hover{height:100px;}
+.link{ text-decoration: underline}
+.validate_txtarea{ border:2px solid #da1b2c !important;}
+.fancybox-type-iframe .fancybox-inner{overflow: hidden !important;}
+.fancybox-iframe html{height:inherit !important;}
+.fancybox-iframe body{height:inherit !important;}
+/*map*/
+.uscanada:hover{cursor:pointer;}
+.asiaaustralia:hover{cursor:pointer;}
+.africa:hover{cursor:pointer;}
+.middleeast:hover{cursor:pointer;}
+.europe:hover{cursor:pointer;}
+.america:hover{cursor:pointer;}
+.captcha span{  color: #da1b2c;  padding-left: 3px}
+.quick-liks.full-view-height li figure img {max-height: 245px;}
+.contact-add{margin:0; padding:0;}
+.contact-add h3{margin:0 0 10px; padding:0; font-weight:700;}
+.contact-add p{margin:10px 0 20px; padding:0;}
+.contact-add .socialIcon{margin-top:15px;}
+.contact-add .socialIcon i{font-size:36px;}
+.add-details h3, .add-details h4, .add-details h5 { font-weight:bold}
+.add-details h5 { color: #4e4e4e; font-family: MuseoSans-500; margin:20px 0;}
+.country-address li { font-family: verdana;}
+.add-details {margin-bottom:25px;}
+.add-details p {   margin-bottom:0; }
+.country-address {margin: 20px 0 25px;}
+.contact-desc p { font-family: verdana;}
+ .google-maps {position: relative;padding-bottom: 75%; height: 0;overflow: hidden;}
+ .google-maps iframe {position: absolute;top: 0;left: 0;width: 100% !important;height: 100% !important;}
+
+.quick-liks li .btn-default {position:static; margin-bottom:0;}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+  #svg2 { height:450px; }
+}
+*::-ms-backdrop, #svg2 { height:450px; } /* IE11 */
+

@@ -1,0 +1,46 @@
+@charset "utf-8";
+/*-----------------------Color------------------*/
+
+/*------------Red-----------*/
+.red-link a{color:#da1b2c;}
+.blue-link a{color: #2B9AF3}
+.sky-link{color:#00b2d3;}
+
+.sky{background:#00b2d3;}
+.red-col .header-top{background:#da1b2c;}
+.red-col .menu li a{color:#da1b2c;}
+
+.green{background-color:#acb945;}
+.orange{background-color:#e68035;}
+
+.red{background:#da1b2c;}
+/* .red:hover{background:#973136;} */
+/* .sky:hover{background:#01a1bf;} */
+.orchid{background:#92278f;}
+/* .orchid:hover{background:#6b1c69;} */
+.sapphire{background:#265eac;}
+/* .sapphire:hover{background:#1a4581;} */
+/*.green{background:#acba45;}*/
+/* .green:hover{background:#8b9924;} */
+/*.orange{background:#e58035;}
+ .orange:hover{background:#c15e15;} */
+.deepred{background:#963035;}
+/* .deepred:hover{background:#973136;} */
+.purple{background:#D7C8D9;}
+/* .purple:hover{background:#996699;} */
+
+.deepsapphire{background:#1a4581;}
+.deeporchid{background:#6b1c69;}
+.deepsky{background:#01a1bf;}
+/*
+.right-col-inner a.africa1.selected{background:#973136;}
+.right-col-inner a.asiaaustralia1.selected{background:#01a1bf;}
+.right-col-inner a.america1.selected{background:#6b1c69;}
+.right-col-inner a.middleeast1.selected{background:#1a4581;}
+.right-col-inner a.europe1.selected{background:#973136;}
+.right-col-inner a.uscanada1.selected{background:#01a1bf;}*/
+
+
+
+
+
